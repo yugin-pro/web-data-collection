@@ -1,0 +1,22 @@
+{
+  "name": "web-data-collection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yugin-pro/web-data-collection.git"
+  },
+  "keywords": [
+    "analytics"
+  ],
+  "author": "Yugin D.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yugin-pro/web-data-collection/issues"
+  },
+  "homepage": "https://github.com/yugin-pro/web-data-collection#readme"
+}
