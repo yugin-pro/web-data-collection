@@ -5,8 +5,8 @@ import { MongoClient } from 'mongodb'
 function main() {
   const app = new AppConfigurator()
   const client = new MongoClient(app.config.database.url);
-  const database = client.db("raw_analytics");
-  const logCollection = database.collection("log");
+  const database = client.db(app.config.database.name);
+  const logCollection = database.collection(app.config.database.table);
 
 
   const server = http.createServer((req, res) => {  
