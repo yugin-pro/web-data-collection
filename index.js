@@ -15,8 +15,18 @@ function main() {
             logCollection.insertOne(headerLog)
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(headerLog));
+            return
           }
-          res.end()
+          if (req.url.match(/tracker\.js/)) {
+            let headerLog = new AnalyticalLog(req)
+            logCollection.insertOne(headerLog)
+            let data = readFileSync('tracker.js')
+            res.writeHead(200, { 'Content-Type': 'application/javascript' });
+            res.end(data);
+            return
+          }
+          res.writeHead(200, { 'Content-Type': 'html' });
+          res.end(readFileSync('tmp.html'))
     });
 
   server.listen(app.config.port);
