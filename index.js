@@ -10,19 +10,19 @@ function main() {
 
 
   const server = http.createServer((req, res) => {  
-          if (req.url.match(/web-data-collection/)) {
-            let headerLog = new AnalyticalLog(req)
-            logCollection.insertOne(headerLog)
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(headerLog));
-            return
-          }
-          if (req.url.match(/tracker\.js/)) {
+          if (req.url.match(/web-data-collection\/tracker\.js/)) {
             let headerLog = new AnalyticalLog(req)
             logCollection.insertOne(headerLog)
             let data = readFileSync('tracker.js')
             res.writeHead(200, { 'Content-Type': 'application/javascript' });
             res.end(data);
+            return
+          }
+          if (req.url.match(/web-data-collection/)) {
+            let headerLog = new AnalyticalLog(req)
+            logCollection.insertOne(headerLog)
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(headerLog));
             return
           }
           res.writeHead(200, { 'Content-Type': 'html' });
