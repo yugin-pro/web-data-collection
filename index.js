@@ -1,6 +1,9 @@
 import http from 'node:http'
 import { readFileSync  } from 'node:fs'
+import { Buffer } from 'node:buffer';
 import { MongoClient } from 'mongodb'
+
+const pixel = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjuP2f4T8AB20C2vgNEPMAAAAASUVORK5CYII=','base64')
 
 function main() {
   const app = new AppConfigurator()
@@ -21,8 +24,7 @@ function main() {
           if (req.url.match(/web-data-collection/)) {
             let headerLog = new AnalyticalLog(req)
             logCollection.insertOne(headerLog)
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(headerLog));
+            res.end(pixel);
             return
           }
           res.writeHead(200, { 'Content-Type': 'html' });
