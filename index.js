@@ -1,9 +1,10 @@
 import http from 'node:http'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync, Dirent } from 'node:fs'
+import path from 'node:path'
+import { URL } from 'node:url'
 import AppLoger from './classes/AppLoger.js'
-import LogExtractor from './classes/LogExtractor.js';
-import AppConfigurator from './classes/AppConfigurator.js';
-
+import LogExtractor from './classes/LogExtractor.js'
+import AppConfigurator from './classes/AppConfigurator.js'
 
 const app = new AppLoger('app-config.json')
 const server = http.createServer((req, res) => {  
@@ -25,8 +26,19 @@ const server = http.createServer((req, res) => {
           res.end(app.pixel);
           return
         }
-        res.writeHead(200, { 'Content-Type': 'html' });
-        res.end(readFileSync('tmp.html'))
+
+        let myURL = new URL(req.url,'http://localhost:3030')
+        let myPath = path.relative('/', req.url)
+        if (path.extname(myPath) === '') {
+          myPath = path.join(myPath, 'index.html')
+        }
+        if (existsSync(myPath)) {
+          res.end(readFileSync(myPath))
+          return
+        }
+        res.writeHead(404, { 'Content-Type': 'html' });
+        res.end(`<h1>404 no such page</h1>`)
+
   });
 
 server.listen(app.port);
