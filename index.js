@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
           return
         }
 
-        let myURL = new URL(req.url,'http://localhost:3030')
+        let myURL = new URL(req.url,`http://${req.headers.host}`)
         let myPath = path.relative('/', myURL.pathname)
         if (path.extname(myPath) === '') {
           myPath = path.join(myPath, 'index.html')
