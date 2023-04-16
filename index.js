@@ -8,7 +8,7 @@ import AppConfigurator from './classes/AppConfigurator.js'
 
 const app = new AppLoger('app-config.json')
 const server = http.createServer((req, res) => {  
-        if (req.url.match(/web-data-collection\/tracker\.js/)) {
+        if (req.url.match(/tracker\.js/)) {
           app.log(new LogExtractor(req))
 
           let data = readFileSync('tracker.js')

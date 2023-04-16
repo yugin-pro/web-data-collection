@@ -5,27 +5,56 @@ class WebTracker {
       return WebTracker._instance
     }
     WebTracker._instance = this;
+    this.id = Math.random().toString(16).slice(2) + '.' + Date.now()
   }
 
-  pageView() {
+  load() {
     let options = {
       headers: {
-        'X-track-type': 'page_view'
+        'X-track-type': 'load',
+        'X-track-id': this.id + '.' + Date.now() ,
       }
     }
     this.collect(options)
   }
 
-  screenView() {
+  view(target) {
+    let elemPos = window.pageYOffset + target.getBoundingClientRect().bottom
+    let windowPos = window.pageYOffset + document.documentElement.clientHeight
     let options = {
       headers: {
-        'X-track-type': 'screen_view'
+        'X-track-type': 'view',
+        'X-track-id': this.id + '.' + Date.now() ,
+      }
+    }
+    if (elemPos <= windowPos ) {
+      this.collect(options)
+    }
+    
+  }
+
+  interaction() {
+    let options = {
+      headers: {
+        'X-track-type': 'interaction',
+        'X-track-id': this.id + '.' + Date.now() ,
       }
     }
     this.collect(options)
+  }
+
+  record() {
+    let options = {
+      headers: {
+        'X-track-type': 'interaction',
+        'X-track-id': this.id + '.' + Date.now() ,
+      }
+    }
+    this.collect(options)    
   }
 
   async collect(options) {
+    console.log(options)
     let resp = await fetch('/web-data-collection', options)
   }
 }
@@ -34,19 +63,18 @@ const ypro = new WebTracker()
 
 if (document.readyState == 'complete') {
   // ещё загружается, ждём события
-  pV();
-  sV();
+  ypro.load()
+  ypro.view(document.querySelector('#view_test'))
 } else {
   // DOM готов!
-  document.addEventListener('DOMContentLoaded', pV);
-  window.addEventListener('load', sV);
-}
+  document.addEventListener('DOMContentLoaded', (() => ypro.load()));
+  window.addEventListener('load', (() => {
+    ypro.view(document.querySelector('#view_test'))
 
-function pV() {
-  ypro.pageView()
-}
+    window.addEventListener('scroll', function() {
+      ypro.view(document.querySelector('#view_test'))
+    });
 
-function sV() {
-  ypro.screenView()
+  }));
 }
 
