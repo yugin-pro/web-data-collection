@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/yugin-pro/web-data-collection/issues"
   },
-  "homepage": "https://github.com/yugin-pro/web-data-collection#readme",
-  "dependencies": {
-    "mongodb": "^5.1.0"
-  }
+  "homepage": "https://github.com/yugin-pro/web-data-collection#readme"
 }
