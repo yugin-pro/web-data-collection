@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/yugin-pro/web-data-collection/issues"
   },
-  "homepage": "https://github.com/yugin-pro/web-data-collection#readme"
+  "homepage": "https://github.com/yugin-pro/web-data-collection#readme",
+  "dependencies": {
+    "@clickhouse/client": "^0.0.16"
+  }
 }
