@@ -1,5 +1,9 @@
 # web-data-collection
 
+url decoding
+
+/[web data collection server path]/[api version]/[method name]
+
 
 # install
 <!-- Yugin-pro tracker -->

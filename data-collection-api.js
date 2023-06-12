@@ -5,6 +5,23 @@ import { URL } from 'node:url'
 import AppLoger from './classes/AppLoger.js'
 import LogExtractor from './classes/LogExtractor.js'
 import AppConfigurator from './classes/AppConfigurator.js'
+import ApiRouter from './classes/ApiRouter.js'
+
+const app = new AppLoger('app-config.json')
+const server = http.createServer((req, res) => {
+  
+  new ApiRouter(req, res, app)
+    .validate()
+    .execute()
+
+})
+
+server.on('clientError', (err, socket) => {
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
+server.listen(app.port);
+/*
 
 const app = new AppLoger('app-config.json')
 const server = http.createServer((req, res) => {  
@@ -43,4 +60,4 @@ const server = http.createServer((req, res) => {
 
 server.listen(app.port);
 
-  
+*/
