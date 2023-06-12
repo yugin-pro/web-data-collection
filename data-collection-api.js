@@ -9,10 +9,16 @@ import ApiRouter from './classes/ApiRouter.js'
 
 const app = new AppLoger('app-config.json')
 const server = http.createServer((req, res) => {
-  
-  new ApiRouter(req, res, app)
+  try {
+    new ApiRouter(req, res, app)
     .validate()
     .execute()
+  } catch (error) {
+    console.log(error);
+    res.statusCode = 404
+    res.end()
+  }
+
 
 })
 

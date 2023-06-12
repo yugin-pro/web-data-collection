@@ -16,24 +16,32 @@ export default class ApiRouter {
     }
 
     get modulePath() {
-        return path.join('api/', this.urlLevelList.slice(2, 4).join('/') +  '.js')
+        return path.join('/api/', this.urlLevelList.slice(2, 4).join('/') +  '.js')
+    }
+
+    get moduleUrl() {
+        return '../api/' + this.urlLevelList.slice(2, 4).join('/') +  '.js'
+    }
+
+    getAvailableApiPathnameList() {
+        return [ path.join('/api/dev/parallax-template.js'), path.join('/api/v1/tracker.js'), path.join('/api/v1/collect.js')]
     }
 
     validate() {
-        let chekSettingsPath = (this.app.config.serverPathSetting === this.urlFirstLevel)
-        let checkPathLevelCount = (this.urlLevelList.length >= 2)
-        if ( checkPathLevelCount) {
+       console.log(this.getAvailableApiPathnameList(),this.modulePath   );
+       
+        if ( this.getAvailableApiPathnameList().indexOf(this.modulePath) > -1) {
             return this
         } else {
-            throw new Error(`Not valid path for routing: chekSettingsPath ${chekSettingsPath} and checkPathLevelCount ${checkPathLevelCount}`)
+            throw new Error(`Not valid path for routing ${this.modulePath}`)
         }
         
     }
 
     async execute() {
-        // console.log(this.modulePath, this.urlLevelList.slice(2, 4));
-    let module = await import( '../'+ this.modulePath)
-    module.parse(this.req, this.res)
+         console.log(this.moduleUrl, this.urlLevelList.slice(2, 4));
+        let routeModule = await import(this.moduleUrl)
+        routeModule.handling(this.req, this.res, this.app)
 
     }
 
