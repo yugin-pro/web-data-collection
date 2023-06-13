@@ -1,22 +1,19 @@
 import { readFileSync } from 'node:fs'
 import { appendFile } from 'node:fs/promises'
 import { Buffer } from 'node:buffer'
-
-const client = createClient({
-    host: process.env.CLICKHOUSE_HOST ?? 'http://localhost:8123',
-    username: process.env.CLICKHOUSE_USER ?? 'default',
-    password: process.env.CLICKHOUSE_PASSWORD ?? '',
-  })
+import { createClient } from '@clickhouse/client'
 
 export default class AppLoger {
     constructor(path_to_config) {
         if (!AppLoger._instance) {
             this.config = JSON.parse(readFileSync(path_to_config,'utf8'))
+            this.createClickhouseClient()
             AppLoger._instance = this;
           }
           return AppLoger._instance;
     }
     async log(logData){
+        this.insert(logData)
         return appendFile('./log/data.json',JSON.stringify(logData)+'\n')
     }
     get pixel() {
@@ -24,5 +21,30 @@ export default class AppLoger {
     }
     get port() {
         return this.config.port
+    }
+    get clickhouse() {
+        return this.config.clickhouse
+    }
+
+    createClickhouseClient() {
+        this.clickhouseClient =  createClient({
+            host: this.clickhouse.HOST ?? 'http://localhost:8123',
+            username: this.clickhouse.USER ?? 'default',
+            password: this.clickhouse.PASSWORD ?? '',
+          })
+        
+    }
+
+    insert(js_object, tableName = this.clickhouse.TABLE) {
+        this.clickhouseClient.insert({
+            table: tableName,
+            // structure should match the desired format, JSONEachRow in this example
+            values: [
+                [
+                    js_object
+                ]
+            ],
+            //format: 'JSONEachRow',
+          })
     }
 }
