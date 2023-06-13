@@ -2,6 +2,11 @@ import { readFileSync } from 'node:fs'
 import { appendFile } from 'node:fs/promises'
 import { Buffer } from 'node:buffer'
 
+const client = createClient({
+    host: process.env.CLICKHOUSE_HOST ?? 'http://localhost:8123',
+    username: process.env.CLICKHOUSE_USER ?? 'default',
+    password: process.env.CLICKHOUSE_PASSWORD ?? '',
+  })
 
 export default class AppLoger {
     constructor(path_to_config) {
