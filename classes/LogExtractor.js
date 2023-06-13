@@ -1,11 +1,10 @@
 
 
 export default class LogExtractor {
-    constructor(req) {
-        this.headers = req.headers
-        this.date = Date.now()
-        this.address = req.socket.address()
+    constructor(req) {        
+        this.date = Date.now()        
         this.url = req.url
-        this.trailers = req.trailers
+        this.headers = req.headers
+        this.address = req.socket.address()
     }
 }
