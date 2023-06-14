@@ -24,7 +24,7 @@ export default class ApiRouter {
     }
 
     getAvailableApiPathnameList() {
-        return [ path.join('/api/dev/parallax-template.js'), path.join('/api/v1/tracker.js'), path.join('/api/v1/collect.js')]
+        return this.app.apiUrlList.map(url => path.join(url))
     }
 
     validate() {

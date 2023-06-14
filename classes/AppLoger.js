@@ -25,7 +25,9 @@ export default class AppLoger {
     get clickhouse() {
         return this.config.clickhouse
     }
-
+    get apiUrlList() {
+        return this.config.apiUrlList
+    }
     createClickhouseClient() {
         this.clickhouseClient =  createClient({
             host: this.clickhouse.HOST ?? 'http://localhost:8123',
