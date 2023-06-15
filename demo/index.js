@@ -1,6 +1,6 @@
 
 import http from 'node:http'
-import { readFileSync, existsSync, Dirent } from 'node:fs'
+import { readFileSync, existsSync} from 'node:fs'
 import path from 'node:path'
 import { URL } from 'node:url'
 
