@@ -16,7 +16,7 @@ class yproTracker {
   //https://developers.google.com/tag-platform/gtagjs/reference?hl=ru
   event(eventName, eventNameParameters = undefined) {
     if (typeof eventNameParameters == 'object') {
-      fetch('/web-data-collection/dev/collect', {
+      fetch( this.apiUrl, {
         method: 'POST',
         headers: {
           'X-track-type': eventName,
@@ -27,7 +27,7 @@ class yproTracker {
       })
       return
     }
-    fetch('/web-data-collection/dev/collect', {
+    fetch(this.apiUrl, {
       headers: {
         'X-track-type': eventName,
         'X-track-id': this.id + '.' + Date.now(),
