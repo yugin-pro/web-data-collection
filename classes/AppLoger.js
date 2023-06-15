@@ -49,4 +49,11 @@ export default class AppLoger {
             //format: 'JSONEachRow',
           })
     }
+    insertStream(stream, tableName = this.clickhouse.TABLE) {
+        this.clickhouseClient.insert({
+            table: tableName,
+            values: stream,
+            format: 'JSONEachRow',
+          })
+    }
 }

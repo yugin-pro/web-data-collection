@@ -28,7 +28,6 @@ export default class ApiRouter {
     }
 
     validate() {
-       console.log(this.getAvailableApiPathnameList(),this.modulePath   );
        
         if ( this.getAvailableApiPathnameList().indexOf(this.modulePath) > -1) {
             return this
@@ -39,7 +38,6 @@ export default class ApiRouter {
     }
 
     async execute() {
-         console.log(this.moduleUrl, this.urlLevelList.slice(2, 4));
         let routeModule = await import(this.moduleUrl)
         routeModule.handling(this.req, this.res, this.app)
 
