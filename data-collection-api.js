@@ -10,7 +10,7 @@ const server = http.createServer((req, res) => {
 
   if (
     req.url.indexOf(app.serverUrlRoot + '/dev') === 0 || 
-    req.url.indexOf(app.serverUrlRoot + '/api') === 0
+    req.url.indexOf(app.serverUrlRoot + '/v1') === 0
   
   ) {
     try {
