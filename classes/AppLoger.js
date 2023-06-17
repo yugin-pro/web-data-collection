@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { appendFile } from 'node:fs/promises'
 import { Buffer } from 'node:buffer'
 import { createClient } from '@clickhouse/client'
+import { randomUUID } from 'crypto'
 
 export default class AppLoger {
     constructor(path_to_config) {
@@ -47,7 +48,7 @@ export default class AppLoger {
             // structure should match the desired format, JSONEachRow in this example
             values: [
                 [
-                    js_object
+                    js_object, randomUUID(), Date.now()
                 ]
             ],
             //format: 'JSONEachRow',
